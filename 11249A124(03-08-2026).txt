@@ -1,0 +1,357 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Aug 3 09:24:17 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A124@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table students
+  2  (
+  3  Regno char(10) primary key,
+  4  Nmae varchar2(20),
+  5
+SQL>
+SQL> create table students
+  2  (
+  3  Regno char(10) primary key,
+  4  Name varchar2(20),
+  5  Dob date,
+  6  Coursename char(20),
+  7  Deptname char(15),
+  8  Year number(2)
+  9  );
+
+Table created.
+
+SQL> desc students
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL CHAR(10)
+ NAME                                               VARCHAR2(20)
+ DOB                                                DATE
+ COURSENAME                                         CHAR(20)
+ DEPTNAME                                           CHAR(15)
+ YEAR                                               NUMBER(2)
+
+SQL> create table students
+  2  (
+  3  Regno char(10) primary key,
+  4  Nmae varchar2(20),
+  5
+SQL>
+SQL> create table students
+  2  (
+  3  Regno char(10) primary key,
+  4  Name varchar2(20),
+  5  Dob date,
+  6  Coursename char(20),
+  7  Deptname char(15),
+  8  Year number(2)
+  9  );
+
+Table created.
+
+SQL> desc students
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL CHAR(10)
+ NAME                                               VARCHAR2(20)
+ DOB                                                DATE
+ COURSENAME                                         CHAR(20)
+ DEPTNAME                                           CHAR(15)
+ YEAR                                               NUMBER(2)
+
+SQL> create table students
+  2  (
+  3  Regno char(10) primary key,
+  4  Nmae varchar2(20),
+  5
+SQL>
+SQL> create table students
+  2  (
+  3  Regno char(10) primary key,
+  4  Name varchar2(20),
+  5  Dob date,
+  6  Coursename char(20),
+  7  Deptname char(15),
+  8  Year number(2)
+  9  );
+
+Table created.
+
+SQL> desc students
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL CHAR(10)
+ NAME                                               VARCHAR2(20)
+ DOB                                                DATE
+ COURSENAME                                         CHAR(20)
+ DEPTNAME                                           CHAR(15)
+ YEAR                                               NUMBER(2)
+SQL> create table students1
+  2  (
+  3  Regno char(10),
+  4  Name varchar2(20),
+  5  Dob date,
+  6  Deptname char(15),
+  7  Year number(2)
+  8  );
+
+Table created.
+SQL> create table students1
+  2  (
+  3  Regno char(10),
+  4  Name varchar2(20),
+  5  Dob date,
+  6  Deptname char(15),
+  7  Year number(2)
+  8  );
+
+Table created.
+SQL> drop table students1;
+
+Table dropped.
+
+
+SQL> create table fees(
+  2  feeid number primary key,
+  3  regno char(10),
+  4  amount number,
+  5  status varchar2(10),
+  6  constraints fk_fee_student
+  7  foreign key (regno)
+  8  References students(regno)
+  9  );
+
+Table created.
+  2
+SQL> drop table department;
+
+Table dropped.
+
+SQL> -- Parent table
+SQL> CREATE TABLE Department (
+  2      DepartmentID INT PRIMARY KEY,
+  3      DepartmentName VARCHAR(100)
+  4  );
+
+Table created.
+
+SQL>
+SQL> -- Student table
+SQL> CREATE TABLE students2 (
+  2      StudentID INT PRIMARY KEY,
+  3      StudentName VARCHAR(100) NOT NULL,
+  4      Age INT,
+  5      Gender CHAR(1),
+  6      DepartmentID INT,
+  7      CONSTRAINT FK_Department
+  8          FOREIGN KEY (DepartmentID)
+  9          REFERENCES Department(DepartmentID)
+ 10  );
+
+Table created.
+
+SQL> desc department
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPARTMENTID                              NOT NULL NUMBER(38)
+ DEPARTMENTNAME                                     VARCHAR2(100)
+
+SQL> desc students2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL NUMBER(38)
+ STUDENTNAME                               NOT NULL VARCHAR2(100)
+ AGE                                                NUMBER(38)
+ GENDER                                             CHAR(1)
+ DEPARTMENTID                                       NUMBER(38)
+SQL> drop table students2;
+
+Table dropped.
+
+SQL> create table students2(
+  2  Regno number primary key,
+  3  studentname varchar2(30),
+  4  Dob date,
+  5  course varchar2(20),
+  6  year number
+  7  );
+
+Table created.
+
+SQL> drop table fee;
+drop table fee
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> drop table fees;
+
+Table dropped.
+
+SQL> create table fee(
+  2  FeeId number primary key,
+  3  Regno number,
+  4  Amount number,
+  5  status varchar2(10),
+  6  CONSTRAINT FK_fee_students2
+  7  FOREIGN KEY (Regno)
+  8  REFERENCES students2(Regno)
+  9  );
+
+Table created.
+
+SQL> select *  from table students2
+  2
+SQL> select * from table students2;
+select * from table students2
+                    *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> desc students2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL NUMBER
+ STUDENTNAME                                        VARCHAR2(30)
+ DOB                                                DATE
+ COURSE                                             VARCHAR2(20)
+ YEAR                                               NUMBER
+
+SQL> desc fee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ FEEID                                     NOT NULL NUMBER
+ REGNO                                              NUMBER
+ AMOUNT                                             NUMBER
+ STATUS                                             VARCHAR2(10)
+
+SQL> insert into students2 values (101,"priya",'15-jan-2006','BCA',1);
+insert into students2 values (101,"priya",'15-jan-2006','BCA',1)
+                                  *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into students2 values (101,'priya','15-jan-2006','BCA',1);
+
+1 row created.
+
+SQL> insert into students2 values (102,'hari','10-feb-2006','CSE',2);
+
+1 row created.
+
+SQL> insert into students2 values (103,'bavi','10-may-2007','EEE',4);
+
+1 row created.
+
+SQL> desc students2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL NUMBER
+ STUDENTNAME                                        VARCHAR2(30)
+ DOB                                                DATE
+ COURSE                                             VARCHAR2(20)
+ YEAR                                               NUMBER
+
+SQL> select * from students2
+  2  ;
+
+     REGNO STUDENTNAME                    DOB       COURSE
+---------- ------------------------------ --------- --------------------
+      YEAR
+----------
+       101 priya                          15-JAN-06 BCA
+         1
+
+       102 hari                           10-FEB-06 CSE
+         2
+
+       103 bavi                           10-MAY-07 EEE
+         4
+
+
+SQL> insert into fee values (1,101,25000,'paid');
+
+1 row created.
+
+SQL> insert into fee values (2,102,25000,'pending');
+
+1 row created.
+
+SQL> insert into fee values (3,103,25000,'paid');
+
+1 row created.
+
+SQL> select * from fee;
+
+     FEEID      REGNO     AMOUNT STATUS
+---------- ---------- ---------- ----------
+         1        101      25000 paid
+         2        102      25000 pending
+         3        103      25000 paid
+
+SQL> drop table department;
+
+Table dropped.
+
+SQL> creat table department(
+SP2-0734: unknown command beginning "creat tabl..." - rest of line ignored.
+SQL> create table department(
+  2  deptno number primary key,
+  3  deptname varchar2(30)
+  4  );
+
+Table created.
+
+SQL> insert into department values (101,'cse');
+
+1 row created.
+
+SQL> insert into department values (102,'cse');
+
+1 row created.
+
+SQL> insert into department values (103,'cse');
+
+1 row created.
+
+SQL> create table students3(
+  2  regno number,
+  3  name varchar2(30),
+  4  deptno number,
+  5  email varchar2(50) unique,
+  6  age number check (age between 17 and 25),
+  7
+SQL> create table students3(
+  2  regno number(3) primary key,
+  3  stuname varchar2(20) NOT NULL,
+  4  gender char default 'M',
+  5  age number check(age<100),
+  6  email varchar2(15) unique,
+  7  deptno number References department (deptno)
+  8  );
+
+Table created.
+
+SQL> insert into students3 values (124,'hari','f',20,'ha1@gmail.com',101);
+
+1 row created.
+
+
+SQL> select * from students3
+  2  ;
+
+     REGNO STUNAME              G        AGE EMAIL               DEPTNO
+---------- -------------------- - ---------- --------------- ----------
+       124 hari                 f         20 ha1@gmail.com          101
+
+SQL>
+
