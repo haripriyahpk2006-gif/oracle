@@ -1,0 +1,87 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Aug 10 10:09:56 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A124@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table student (
+  2  studnt_id int,
+  3  name varchar(50),
+  4  email varchar(100),
+  5  age int,
+  6  department_id int
+  7  );
+
+Table created.
+
+
+SQL> drop table student
+  2  ;
+
+Table dropped.
+
+SQL> CREATE TABLE Student (    Student_ID INT,    Name VARCHAR(50),    Email VARCHAR(100),    Age INT,    Department_ID INT);
+
+Table created.
+
+
+SQL> alter table student
+  2  add constraint pk_student
+  3  primary key (student_Id);
+
+Table altered.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(50)
+ EMAIL                                              VARCHAR2(100)
+ AGE                                                NUMBER(38)
+ DEPARTMENT_ID                                      NUMBER(38)
+
+
+SQL> alter table student modify name varchar(50) NOT NULL;
+
+Table altered.
+
+
+SQL> alter table student add constraint uq_student_email unique (Email);
+
+Table altered.
+
+SQL> alter table student add constraint ck_student_age check (age >= 18);
+
+Table altered.
+
+INSERT INTO Student (Student_ID, Name, Email, Department_ID)
+VALUES (5, 'Ravi', 'ravi@gmail.com', 101);
+1 row created.
+
+SQL> select * from student;
+
+STUDENT_ID NAME
+---------- --------------------------------------------------
+EMAIL
+--------------------------------------------------------------------------------
+       AGE DEPARTMENT_ID
+---------- -------------
+         5 Ravi
+ravi@gmail.com
+                     101
+
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(50)
+ EMAIL                                              VARCHAR2(100)
+ AGE                                                NUMBER(38)
+ DEPARTMENT_ID                                      NUMBER(38)
+
+SQL>
