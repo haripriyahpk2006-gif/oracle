@@ -1,0 +1,184 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Sep 7 10:06:04 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A124@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table employee(
+  2  empId INT,
+  3  Name VARCHAR(50),
+  4  Department VARCHAR(30),
+  5  Salary INT
+  6
+SQL> Create Table student10
+  2  (
+  3  student_Id number(5) primary key,
+  4  student_Name Varchar2(30),
+  5  department Varchar2(20),
+  6  Marks Number(3)
+  7  );
+
+Table created.
+
+SQL> Insert into student values (101,'Arun','cse',85);
+Insert into student values (101,'Arun','cse',85)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> Insert into student10 values(101,'Arun','CSE',85);
+
+1 row created.
+
+SQL> Insert into student10 values(102,'Bala','CSE',78);
+
+1 row created.
+
+SQL> Insert into student10 values(102,'Divya','CSE',88);
+Insert into student10 values(102,'Divya','CSE',88)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A124.SYS_C0033260) violated
+
+
+SQL> Insert into student10 values (103,'Divya','CSE',88);
+
+1 row created.
+
+SQL> Insert into student10 values (105,'Kavi','CSE',81);
+
+1 row created.
+
+SQL> Select count(*) As Total_students
+  2  From student10;
+
+TOTAL_STUDENTS
+--------------
+             4
+
+SQL> Select Sum(Marks) As Total_Marks
+  2  From student10;
+
+TOTAL_MARKS
+-----------
+        332
+
+SQL> Select Avg(marks) as average_marks
+  2  From student10;
+
+AVERAGE_MARKS
+-------------
+           83
+
+SQL> Select Max(Marks) As Highest_Mark
+  2  From student10;
+
+HIGHEST_MARK
+------------
+          88
+
+SQL> Select Min(Marks) As Lowest_Mark
+  2  From student10;
+
+LOWEST_MARK
+-----------
+         78
+
+SQL> Select Department,Avg(Marks) As Avg_Marks
+  2  From student10
+  3  Group By Department;
+
+DEPARTMENT            AVG_MARKS
+-------------------- ----------
+CSE                          83
+
+SQL> Select Department,Count(*) As Total_students
+  2  From Student10
+  3  Group By Department;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+CSE                               4
+
+SQL>
+SQL> Select Department, Max(Marks) As Max_Marks
+  2  From student10
+  3  Group By Department;
+
+DEPARTMENT            MAX_MARKS
+-------------------- ----------
+CSE                          88
+
+SQL> Select Department, Avg(Marks) As Avg_Marks
+  2  From student10
+  3  Group By department
+  4  Having Avh(Marks)>85;
+Having Avh(Marks)>85
+       *
+ERROR at line 4:
+ORA-00904: "AVH": invalid identifier
+
+
+SQL> Select department, Avg(Marks) As Avg_Marks
+  2  From Student10
+  3  Group By Department
+  4  Having Avg(marks)>85;
+
+no rows selected
+
+SQL> Select Department,Count(*) As Total_students
+  2  From student10
+  3  Group By Department
+  4  Having Count(*) > 1;
+
+DEPARTMENT           TOTAL_STUDENTS
+-------------------- --------------
+CSE                               4
+
+SQL> Insert into student10 Values (111,'ravi','ECE',81);
+
+1 row created.
+
+SQL> Insert into student10 values (112,'Suresh','IT',95);
+
+1 row created.
+
+SQL> Insert into student10 vlaues (113,'bala','ECE',92);
+Insert into student10 vlaues (113,'bala','ECE',92)
+                              *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> Select Department, count(*) As No_Of_Students,
+  2  Avg(marks) as avg_marks,max(marks) as highest_mark
+  3  from student10
+  4  group by Department
+  5  having avg(marks)>80;
+
+DEPARTMENT           NO_OF_STUDENTS  AVG_MARKS HIGHEST_MARK
+-------------------- -------------- ---------- ------------
+IT                                1         95           95
+CSE                               4         83           88
+ECE                               1         81           81
+
+SQL> Select * from student10;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+       101 Arun                           CSE                          85
+       102 Bala                           CSE                          78
+       103 Divya                          CSE                          88
+       105 Kavi                           CSE                          81
+       111 ravi                           ECE                          81
+       112 Suresh                         IT                           95
+
+6 rows selected.
+
+SQL>
