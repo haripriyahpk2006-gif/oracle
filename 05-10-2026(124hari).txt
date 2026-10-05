@@ -1,0 +1,769 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Oct 5 10:14:54 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A124@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+
+SQL> CREATE TABLE STUDENT
+  2  (
+  3      STUD_ID NUMBER(5) PRIMARY KEY,
+  4      STUD_NAME VARCHAR2(30),
+  5      MARKS NUMBER(8)
+  6  );
+CREATE TABLE STUDENT
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL>
+SQL> drop table student;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT
+  2  (
+  3      STUD_ID NUMBER(5) PRIMARY KEY,
+  4      STUD_NAME VARCHAR2(30),
+  5      MARKS NUMBER(8)
+  6  );
+
+
+Table created.
+
+
+
+SQL> INSERT INTO STUDENT VALUES (101,'ARUN',85);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT VALUES (102,'BALA',90);
+
+1 row created.
+
+SQL> GRANT SELECT
+  2  ON STUDENT
+  3  TO SCOTT;
+
+
+Grant succeeded.
+
+
+SQL> GRANT SELECT, INSERT, UPDATE
+  2  ON STUDENT
+  3  TO SCOTT;
+
+
+Grant succeeded.
+
+
+SQL> REVOKE INSERT
+  2  ON STUDENT
+  3  FROM SCOTT;
+
+Revoke succeeded.
+
+SQL> INSERT INTO STUDENT VALUES (103,'DIVYA',95);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> INSERT INTO STUDENT VALUES (104,'KAVI',88);
+
+1 row created.
+
+SQL>
+SQL> SAVEPOINT SP1;
+
+Savepoint created.
+
+SQL> INSERT INTO STUDENT VALUES (105,'RAVI',78);
+
+1 row created.
+
+SQL> ROLLBACK TO SP1;
+
+Rollback complete.
+
+SQL> SELECT * FROM STUDENT;
+
+   STUD_ID STUD_NAME                           MARKS
+---------- ------------------------------ ----------
+       101 ARUN                                   85
+       102 BALA                                   90
+       103 DIVYA                                  95
+       104 KAVI                                   88
+
+SQL> SET SERVEROUTPUT ON;
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      N NUMBER;
+  3  BEGIN
+  4      N := &N;
+  5
+  6      IF N > 0 THEN
+  7          DBMS_OUTPUT.PUT_LINE('The number is Positive');
+  8
+  9      ELSIF N < 0 THEN
+ 10          DBMS_OUTPUT.PUT_LINE('The number is Negative');
+ 11
+ 12      ELSE
+ 13          DBMS_OUTPUT.PUT_LINE('The number is Zero');
+ 14
+ 15      END IF;
+ 16  END;
+ 17  /
+
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      N NUMBER := 25;
+  3  BEGIN
+  4      IF N > 0 THEN
+  5          DBMS_OUTPUT.PUT_LINE('The number is Positive');
+  6      ELSIF N < 0 THEN
+  7          DBMS_OUTPUT.PUT_LINE('The number is Negative');
+  8      ELSE
+  9          DBMS_OUTPUT.PUT_LINE('The number is Zero');
+ 10      END IF;
+ 11  END;
+ 12  /
+The number is Positive
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      N NUMBER := -15;
+  3  BEGIN
+  4      IF N > 0 THEN
+  5          DBMS_OUTPUT.PUT_LINE('The number is Positive');
+  6      ELSIF N < 0 THEN
+  7          DBMS_OUTPUT.PUT_LINE('The number is Negative');
+  8      ELSE
+  9          DBMS_OUTPUT.PUT_LINE('The number is Zero');
+ 10      END IF;
+ 11  END;
+ 12  /
+
+
+The number is Negative
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      N NUMBER := 0;
+  3  BEGIN
+  4      IF N > 0 THEN
+  5          DBMS_OUTPUT.PUT_LINE('The number is Positive');
+  6      ELSIF N < 0 THEN
+  7          DBMS_OUTPUT.PUT_LINE('The number is Negative');
+  8      ELSE
+  9          DBMS_OUTPUT.PUT_LINE('The number is Zero');
+ 10      END IF;
+ 11  END;
+ 12  /
+
+
+The number is Zero
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   A NUMBER := 100;
+  3   B NUMBER := 0;
+  4   C NUMBER;
+  5  BEGIN
+  6   C := A / B;
+  7   DBMS_OUTPUT.PUT_LINE('Result = ' || C);
+  8  EXCEPTION
+  9   WHEN ZERO_DIVIDE THEN
+ 10   DBMS_OUTPUT.PUT_LINE('Error: Division by Zero is not allowed.');
+ 11  END;
+ 12  /
+
+
+Error: Division by Zero is not allowed.
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE TABLE STUDENT
+  2  (
+  3   STUDENT_ID NUMBER PRIMARY KEY,
+  4   STUDENT_NAME VARCHAR2(30)
+  5  );
+
+SQL> INSERT INTO STUDENT VALUES (101,'ARUN');
+INSERT INTO STUDENT VALUES (101,'ARUN'
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3  BEGIN
+  4   SELECT STUDENT_NAME
+  5   INTO V_NAME
+  6   FROM STUDENT
+  7   WHERE STUDENT_ID = 999;
+  8   DBMS_OUTPUT.PUT_LINE(V_NAME);
+  9  EXCEPTION
+ 10   WHEN NO_DATA_FOUND THEN
+ 11   DBMS_OUTPUT.PUT_LINE('Error: No matching record found.');
+ 12  END;
+ 13  /
+
+ V_NAME STUDENT.STUDENT_NAME%TYPE;
+                *
+
+PL/SQL: Statement ignored
+
+
+SQL> drop table student
+  2  ;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT
+  2  (
+  3   STUDENT_ID NUMBER PRIMARY KEY,
+  4   STUDENT_NAME VARCHAR2(30)
+  5  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT VALUES (101,'ARUN');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3  BEGIN
+  4   SELECT STUDENT_NAME
+  5   INTO V_NAME
+  6   FROM STUDENT
+  7   WHERE STUDENT_ID = 999;
+  8   DBMS_OUTPUT.PUT_LINE(V_NAME);
+  9  EXCEPTION
+ 10   WHEN NO_DATA_FOUND THEN
+ 11   DBMS_OUTPUT.PUT_LINE('Error: No matching record found.');
+ 12  END;
+ 13  /
+
+Error: No matching record found.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   V_NAME STUDENT.STUDENT_NAME%TYPE;
+  3  BEGIN
+  4   SELECT STUDENT_NAME
+  5   INTO V_NAME
+  6   FROM STUDENT;
+  7  DBMS_OUTPUT.PUT_LINE(V_NAME);
+  8  EXCEPTION
+  9   WHEN TOO_MANY_ROWS THEN
+ 10   DBMS_OUTPUT.PUT_LINE('Error: Query returned multiple rows.');
+ 11  END;
+ 12  /
+
+ARUN
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> BEGIN
+  2   INSERT INTO STUDENT VALUES (101,'BALA');
+  3  EXCEPTION
+  4   WHEN DUP_VAL_ON_INDEX THEN
+  5   DBMS_OUTPUT.PUT_LINE('Error: Duplicate value violates unique constraint.');
+  6  END;
+  7  /
+
+
+Error: Duplicate value violates unique constraint.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   V_NUM NUMBER(2);
+  3  BEGIN
+  4   V_NUM := 12345;
+  5  EXCEPTION
+  6   WHEN VALUE_ERROR THEN
+  7   DBMS_OUTPUT.PUT_LINE('Error: Value exceeds variable size.');
+  8  END;
+  9  /
+
+
+Error: Value exceeds variable size.
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2   V_NUM NUMBER;
+  3  BEGIN
+  4   V_NUM := 10/0;
+  5  EXCEPTION
+  6   WHEN OTHERS THEN
+  7   DBMS_OUTPUT.PUT_LINE('SQLCODE : ' || SQLCODE);
+  8   DBMS_OUTPUT.PUT_LINE('SQLERRM : ' || SQLERRM);
+  9  END;
+ 10  /
+
+
+SQLCODE : -1476
+SQLERRM : ORA-01476: divisor is equal to zero
+
+PL/SQL procedure successfully completed.
+
+SQL> Drop table student
+  2  ;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT
+  2  (
+  3   STUDENT_ID NUMBER(5) PRIMARY KEY,
+  4   STUDENT_NAME VARCHAR2(30),
+  5   MARKS NUMBER(3)
+  6  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT VALUES (101,'ARUN',85);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT VALUES (102,'BALA',72);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT VALUES (103,'DIVYA',91);
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> CREATE OR REPLACE PROCEDURE GET_STUDENT
+  2  (
+  3   P_ID IN NUMBER
+  4  )
+  5  IS
+  6   V_NAME STUDENT.STUDENT_NAME%TYPE;
+  7   V_MARKS STUDENT.MARKS%TYPE;
+  8  BEGIN
+  9   SELECT STUDENT_NAME, MARKS
+ 10   INTO V_NAME, V_MARKS
+ 11   FROM STUDENT
+ 12   WHERE STUDENT_ID = P_ID;
+ 13   DBMS_OUTPUT.PUT_LINE('Student Name : ' || V_NAME);
+ 14   DBMS_OUTPUT.PUT_LINE('Marks : ' || V_MARKS);
+ 15  EXCEPTION
+ 16   WHEN NO_DATA_FOUND THEN
+ 17   DBMS_OUTPUT.PUT_LINE('Student Record Not Found.');
+ 18  END;
+ 19  /
+
+Procedure created.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> EXEC GET_STUDENT(101);
+Student Name : ARUN
+Marks : 85
+
+PL/SQL procedure successfully completed.
+
+SQL> EXEC GET_STUDENT(110);
+Student Record Not Found.
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION FIND_GRADE
+  2  (
+  3   P_MARKS NUMBER
+  4  )
+  5  RETURN VARCHAR2
+  6  IS
+  7   V_GRADE VARCHAR2(2);
+  8  BEGIN
+  9   IF P_MARKS >= 90 THEN
+ 10   V_GRADE := 'O';
+ 11   ELSIF P_MARKS >= 80 THEN
+ 12   V_GRADE := 'A+';
+ 13   ELSIF P_MARKS >= 70 THEN
+ 14   V_GRADE := 'A';
+ 15   ELSIF P_MARKS >= 60 THEN
+ 16   V_GRADE := 'B';
+ 17   ELSE
+ 18   V_GRADE := 'C';
+ 19   END IF;
+ 20   RETURN V_GRADE;
+ 21  END;
+ 22  /
+
+Function created.
+
+SQL> SELECT FIND_GRADE(91) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+O
+
+SQL> SELECT FIND_GRADE(75) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+A
+
+SQL> SELECT FIND_GRADE(75) AS GRADE FROM DUAL;
+
+GRADE
+--------------------------------------------------------------------------------
+A
+
+SQL> SELECT STUDENT_ID, STUDENT_NAME, MARKS,
+  2   FIND_GRADE(MARKS) AS GRADE
+  3  FROM STUDENT;
+
+STUDENT_ID STUDENT_NAME                        MARKS
+---------- ------------------------------ ----------
+GRADE
+--------------------------------------------------------------------------------
+       101 ARUN                                   85
+A+
+
+       102 BALA                                   72
+A
+
+       103 DIVYA                                  91
+O
+
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'PROCEDURE';
+
+OBJECT_NAME
+--------------------------------------------------------------------------------
+OBJECT_TYPE
+-------------------
+GET_STUDENT
+PROCEDURE
+
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'FUNCTION';
+
+OBJECT_NAME
+--------------------------------------------------------------------------------
+OBJECT_TYPE
+-------------------
+FIND_GRADE
+FUNCTION
+         
+SQL> Drop table student1
+  2  ;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT1
+  2  (
+  3      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  4      STUDENT_NAME VARCHAR2(30),
+  5      MARKS NUMBER(8)
+  6  );
+
+Table created.
+
+SQL> CREATE TABLE STUDENT1_AUDIT
+  2  (
+  3      AUDIT_ID NUMBER(5),
+  4      STUDENT_ID NUMBER(5),
+  5      ACTION_PERFORMED VARCHAR2(20),
+  6      ACTION_DATE DATE
+  7  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT1 VALUES (101, 'ARUN', 35000);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT1 VALUES (102, 'BALA', 40000);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> CREATE SEQUENCE STUDENT1_AUDIT_SEQ
+  2  START WITH 1
+  3  INCREMENT BY 1;
+
+Sequence created.
+
+SQL> CREATE OR REPLACE TRIGGER TRG_STUDENT1_INSERT
+  2  AFTER INSERT
+  3  ON STUDENT1
+  4  FOR EACH ROW
+  5  BEGIN
+  6      INSERT INTO STUDENT1_AUDIT
+  7      VALUES (
+  8          STUDENT1_AUDIT_SEQ.NEXTVAL,
+  9          :NEW.STUDENT_ID,
+ 10          'INSERT',
+ 11          SYSDATE
+ 12      );
+ 13  END;
+ 14  /
+
+Trigger created.
+
+SQL> INSERT INTO STUDENT1 VALUES (103, 'DIVYA', 45000);
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT1_AUDIT;
+
+  AUDIT_ID STUDENT_ID ACTION_PERFORMED     ACTION_DA
+---------- ---------- -------------------- ---------
+         1        103 INSERT               05-OCT-26
+
+SQL> CREATE OR REPLACE TRIGGER TRG_STUDENT1_UPDATE
+  2  AFTER UPDATE
+  3  ON STUDENT1
+  4  FOR EACH ROW
+  5  BEGIN
+  6      INSERT INTO STUDENT1_AUDIT
+  7      VALUES (
+  8          STUDENT1_AUDIT_SEQ.NEXTVAL,
+  9          :NEW.STUDENT_ID,
+ 10          'UPDATE',
+ 11          SYSDATE
+ 12      );
+ 13  END;
+ 14  /
+
+Trigger created.
+
+SQL> UPDATE STUDENT1
+  2  SET MARKS = 50000
+  3  WHERE STUDENT_ID = 101;
+
+1 row updated.
+
+SQL> SELECT * FROM STUDENT1_AUDIT;
+
+  AUDIT_ID STUDENT_ID ACTION_PERFORMED     ACTION_DA
+---------- ---------- -------------------- ---------
+         1        103 INSERT               05-OCT-26
+         2        101 UPDATE               05-OCT-26
+
+SQL> CREATE OR REPLACE TRIGGER TRG_STUDENT1_DELETE
+  2  AFTER DELETE
+  3  ON STUDENT1
+  4  FOR EACH ROW
+  5  BEGIN
+  6      INSERT INTO STUDENT1_AUDIT
+  7      VALUES (
+  8          STUDENT1_AUDIT_SEQ.NEXTVAL,
+  9          :OLD.STUDENT_ID,
+ 10          'DELETE',
+ 11          SYSDATE
+ 12      );
+ 13  END;
+ 14  /
+
+Trigger created.
+
+SQL> DELETE FROM STUDENT1
+  2  WHERE STUDENT_ID = 102;
+
+1 row deleted.
+
+SQL> SELECT * FROM STUDENT1_AUDIT;
+
+  AUDIT_ID STUDENT_ID ACTION_PERFORMED     ACTION_DA
+---------- ---------- -------------------- ---------
+         1        103 INSERT               05-OCT-26
+         2        101 UPDATE               05-OCT-26
+         3        102 DELETE               05-OCT-26
+
+SQL> SELECT * FROM STUDENT1;
+
+STUDENT_ID STUDENT_NAME                        MARKS
+---------- ------------------------------ ----------
+       101 ARUN                                50000
+       103 DIVYA                               45000
+
+SQL> STUDENT_ID  STUDENT_NAME  MARKS
+SP2-0734: unknown command beginning "STUDENT_ID..." - rest of line ignored.
+SQL> ----------  ------------  -----
+SQL> 101         ARUN          50000
+SQL> 103         DIVYA         45000
+SQL> CREATE TABLE STUDENT2
+  2  (
+  3      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  4      STUDENT_NAME VARCHAR2(30),
+  5      DEPARTMENT VARCHAR2(20),
+  6      MARKS NUMBER(8)
+  7  );
+CREATE TABLE STUDENT2
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table student2;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT2
+  2  (
+  3      STUDENT_ID NUMBER(5) PRIMARY KEY,
+  4      STUDENT_NAME VARCHAR2(30),
+  5      DEPARTMENT VARCHAR2(20),
+  6      MARKS NUMBER(8)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT2 VALUES (101, 'ARUN', 'CSE', 35000);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT2 VALUES (102, 'BALA', 'ECE', 32000);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT2 VALUES (103, 'DIVYA', 'IT', 45000);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT2 VALUES (104, 'KAVI', 'CSE', 40000);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> BEGIN
+  2      UPDATE STUDENT2
+  3      SET MARKS = MARKS + 5000
+  4      WHERE DEPARTMENT = 'CSE';
+  5
+  6      DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT || ' row(s) updated.');
+  7
+  8      COMMIT;
+  9  END;
+ 10  /
+2 row(s) updated.
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM STUDENT2;
+
+STUDENT_ID STUDENT_NAME                   DEPARTMENT                MARKS
+---------- ------------------------------ -------------------- ----------
+       101 ARUN                           CSE                       40000
+       102 BALA                           ECE                       32000
+       103 DIVYA                          IT                        45000
+       104 KAVI                           CSE                       45000
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      CURSOR STUDENT_CURSOR IS
+  3          SELECT STUDENT_ID, STUDENT_NAME, DEPARTMENT, MARKS
+  4          FROM STUDENT2;
+  5
+  6      V_ID STUDENT2.STUDENT_ID%TYPE;
+  7      V_NAME STUDENT2.STUDENT_NAME%TYPE;
+  8      V_DEPT STUDENT2.DEPARTMENT%TYPE;
+  9      V_MARKS STUDENT2.MARKS%TYPE;
+ 10
+ 11  BEGIN
+ 12      OPEN STUDENT_CURSOR;
+ 13
+ 14      LOOP
+ 15          FETCH STUDENT_CURSOR INTO V_ID, V_NAME, V_DEPT, V_MARKS;
+ 16
+ 17          EXIT WHEN STUDENT_CURSOR%NOTFOUND;
+ 18
+ 19          DBMS_OUTPUT.PUT_LINE(
+ 20              V_ID || ' ' || V_NAME || ' ' ||
+ 21              V_DEPT || ' ' || V_MARKS
+ 22          );
+ 23      END LOOP;
+ 24
+ 25      CLOSE STUDENT_CURSOR;
+ 26  END;
+ 27  /
+101 ARUN CSE 40000
+102 BALA ECE 32000
+103 DIVYA IT 45000
+104 KAVI CSE 45000
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON;
+SQL>
+SQL> DECLARE
+  2      CURSOR STUDENT_CURSOR IS
+  3          SELECT STUDENT_ID, STUDENT_NAME, MARKS
+  4          FROM STUDENT2;
+  5
+  6  BEGIN
+  7      FOR STUDENT_REC IN STUDENT_CURSOR LOOP
+  8
+  9          DBMS_OUTPUT.PUT_LINE(
+ 10              STUDENT_REC.STUDENT_ID || ' ' ||
+ 11              STUDENT_REC.STUDENT_NAME || ' ' ||
+ 12              STUDENT_REC.MARKS
+ 13          );
+ 14
+ 15      END LOOP;
+ 16  END;
+ 17  /
+101 ARUN 40000
+102 BALA 32000
+103 DIVYA 45000
+104 KAVI 45000
+
+PL/SQL procedure successfully completed.
+
+SQL>
