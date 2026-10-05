@@ -1,0 +1,183 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Oct 5 11:03:57 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A124@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> CREATE TABLE BRANCH
+  2  (
+  3      BRANCH_ID NUMBER(3) PRIMARY KEY,
+  4      BRANCH_NAME VARCHAR2(30)
+  5  );
+
+Table created.
+
+SQL> INSERT INTO BRANCH VALUES (101, 'CSE');
+
+1 row created.
+
+SQL> INSERT INTO BRANCH VALUES (102, 'ECE');
+
+1 row created.
+
+SQL> INSERT INTO BRANCH VALUES (103, 'IT');
+
+1 row created.
+
+SQL> CREATE TABLE CANDIDATE
+  2  (
+  3      CAND_ID NUMBER(5) PRIMARY KEY,
+  4      CAND_NAME VARCHAR2(30),
+  5      MARKS NUMBER(3),
+  6      BRANCH_ID NUMBER(3),
+  7      CONSTRAINT FK_BRANCH FOREIGN KEY (BRANCH_ID)
+  8      REFERENCES BRANCH(BRANCH_ID)
+  9  );
+
+Table created.
+
+SQL> INSERT INTO CANDIDATE VALUES (1001, 'ARUN', 85, 101);
+
+1 row created.
+
+SQL> INSERT INTO CANDIDATE VALUES (1002, 'BALA', 78, 102);
+
+1 row created.
+
+SQL> INSERT INTO CANDIDATE VALUES (1003, 'DIVYA', 92, 103);
+
+1 row created.
+
+SQL> INSERT INTO CANDIDATE VALUES (1004, 'KAVI', 88, 101);
+
+1 row created.
+
+SQL> SELECT C.CAND_ID, C.CAND_NAME, B.BRANCH_NAME
+  2  FROM CANDIDATE C
+  3  INNER JOIN BRANCH B
+  4      ON C.BRANCH_ID = B.BRANCH_ID;
+
+   CAND_ID CAND_NAME                      BRANCH_NAME
+---------- ------------------------------ ------------------------------
+      1001 ARUN                           CSE
+      1002 BALA                           ECE
+      1003 DIVYA                          IT
+      1004 KAVI                           CSE
+
+SQL> SELECT C.CAND_NAME, B.BRANCH_NAME
+  2  FROM CANDIDATE C
+  3  LEFT OUTER JOIN BRANCH B
+  4      ON C.BRANCH_ID = B.BRANCH_ID;
+
+CAND_NAME                      BRANCH_NAME
+------------------------------ ------------------------------
+KAVI                           CSE
+ARUN                           CSE
+BALA                           ECE
+DIVYA                          IT
+
+SQL> SELECT C.CAND_NAME, B.BRANCH_NAME
+  2  FROM CANDIDATE C
+  3  RIGHT OUTER JOIN BRANCH B
+  4      ON C.BRANCH_ID = B.BRANCH_ID;
+
+CAND_NAME                      BRANCH_NAME
+------------------------------ ------------------------------
+ARUN                           CSE
+BALA                           ECE
+DIVYA                          IT
+KAVI                           CSE
+
+SQL> SELECT C.CAND_NAME, B.BRANCH_NAME
+  2  FROM CANDIDATE C
+  3  FULL OUTER JOIN BRANCH B
+  4      ON C.BRANCH_ID = B.BRANCH_ID;
+
+CAND_NAME                      BRANCH_NAME
+------------------------------ ------------------------------
+ARUN                           CSE
+BALA                           ECE
+DIVYA                          IT
+KAVI                           CSE
+
+SQL> CREATE TABLE WORKER
+  2  (
+  3      WORKER_ID NUMBER(5) PRIMARY KEY,
+  4      WORKER_NAME VARCHAR2(30),
+  5      HEAD_ID NUMBER(5)
+  6  );
+
+Table created.
+
+SQL> INSERT INTO WORKER VALUES (1, 'RAJ', NULL);
+
+1 row created.
+
+SQL> INSERT INTO WORKER VALUES (2, 'ARUN', 1);
+
+1 row created.
+
+SQL> INSERT INTO WORKER VALUES (3, 'BALA', 1);
+
+1 row created.
+
+SQL> SELECT W.WORKER_NAME AS WORKER,
+  2         H.WORKER_NAME AS HEAD
+  3  FROM WORKER W
+  4  LEFT JOIN WORKER H
+  5      ON W.HEAD_ID = H.WORKER_ID;
+
+WORKER                         HEAD
+------------------------------ ------------------------------
+RAJ
+ARUN                           RAJ
+BALA                           RAJ
+
+SQL> SELECT CAND_NAME, MARKS
+  2  FROM CANDIDATE
+  3  WHERE MARKS >
+  4  (
+  5      SELECT AVG(MARKS)
+  6      FROM CANDIDATE
+  7  );
+
+CAND_NAME                           MARKS
+------------------------------ ----------
+DIVYA                                  92
+KAVI                                   88
+
+SQL> SELECT CAND_NAME
+  2  FROM CANDIDATE
+  3  WHERE BRANCH_ID IN
+  4  (
+  5      SELECT BRANCH_ID
+  6      FROM BRANCH
+  7      WHERE BRANCH_NAME = 'CSE'
+  8  );
+
+CAND_NAME
+------------------------------
+ARUN
+KAVI
+
+SQL> SELECT CAND_NAME, MARKS, BRANCH_ID
+  2  FROM CANDIDATE C1
+  3  WHERE MARKS =
+  4  (
+  5      SELECT MAX(MARKS)
+  6      FROM CANDIDATE C2
+  7      WHERE C1.BRANCH_ID = C2.BRANCH_ID
+  8  );
+
+CAND_NAME                           MARKS  BRANCH_ID
+------------------------------ ---------- ----------
+BALA                                   78        102
+DIVYA                                  92        103
+KAVI                                   88        101
+
+SQL>
