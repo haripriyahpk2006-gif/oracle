@@ -1,0 +1,406 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Fri Jul 31 14:56:01 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A259@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> select distinct dept
+  2  from student1;
+select distinct dept
+                *
+ERROR at line 1:
+ORA-00904: "DEPT": invalid identifier
+
+
+SQL> select distinct dept
+  2  from student;
+
+no rows selected
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUD_ID                                            NUMBER(38)
+ NAME1                                              VARCHAR2(20)
+ DEPT1                                              VARCHAR2(10)
+ YEAR1                                              NUMBER(38)
+ MARKS                                              NUMBER(38)
+
+SQL> select name1
+  2  from student1;
+
+no rows selected
+
+SQL> insert into values(&stud_id,'&name1','dept1',&year1,'&marks);
+Enter value for stud_id: 102
+Enter value for name1: yamini
+Enter value for year1: 5
+Enter value for marks: 100
+old   1: insert into values(&stud_id,'&name1','dept1',&year1,'&marks)
+new   1: insert into values(102,'yamini','dept1',5,'100)
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> /
+Enter value for stud_id: 103
+Enter value for name1: nandu
+Enter value for year1: 3
+Enter value for marks: 23
+old   1: insert into values(&stud_id,'&name1','dept1',&year1,'&marks)
+new   1: insert into values(103,'nandu','dept1',3,'23)
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> /
+Enter value for stud_id: 102
+Enter value for name1: jagan
+Enter value for year1: 2
+Enter value for marks: 98
+old   1: insert into values(&stud_id,'&name1','dept1',&year1,'&marks)
+new   1: insert into values(102,'jagan','dept1',2,'98)
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> /
+Enter value for stud_id: 222
+Enter value for name1: gowri
+Enter value for year1: 1
+Enter value for marks: 79
+old   1: insert into values(&stud_id,'&name1','dept1',&year1,'&marks)
+new   1: insert into values(222,'gowri','dept1',1,'79)
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select*from student1;
+
+no rows selected
+
+SQL> insert into values(&stud_id,'&name1','dept1',&year1,'&marks);
+Enter value for stud_id: 22
+Enter value for name1: yam
+Enter value for year1: 4
+Enter value for marks: 99
+old   1: insert into values(&stud_id,'&name1','dept1',&year1,'&marks)
+new   1: insert into values(22,'yam','dept1',4,'99)
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into values(&stud_id,'&name1','&dept',&year,&marks);
+Enter value for stud_id: 222
+Enter value for name1: yam
+Enter value for dept: cse
+Enter value for year: 3
+Enter value for marks: 99
+old   1: insert into values(&stud_id,'&name1','&dept',&year,&marks)
+new   1: insert into values(222,'yam','cse',3,99)
+insert into values(222,'yam','cse',3,99)
+            *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> insert into student1 values(&stud_id,'&name1','&dept',&year,&marks);
+Enter value for stud_id: 444
+Enter value for name1: yam
+Enter value for dept: cse
+Enter value for year: 3
+Enter value for marks: 88
+old   1: insert into student1 values(&stud_id,'&name1','&dept',&year,&marks)
+new   1: insert into student1 values(444,'yam','cse',3,88)
+
+1 row created.
+
+SQL> /
+Enter value for stud_id: 222
+Enter value for name1: yash
+Enter value for dept: eee
+Enter value for year: 1
+Enter value for marks: 69
+old   1: insert into student1 values(&stud_id,'&name1','&dept',&year,&marks)
+new   1: insert into student1 values(222,'yash','eee',1,69)
+
+1 row created.
+
+SQL> /
+Enter value for stud_id: 111
+Enter value for name1: gowri
+Enter value for dept: it
+Enter value for year: 3
+Enter value for marks: 99
+old   1: insert into student1 values(&stud_id,'&name1','&dept',&year,&marks)
+new   1: insert into student1 values(111,'gowri','it',3,99)
+
+1 row created.
+
+SQL> /
+Enter value for stud_id: 666
+Enter value for name1: karuna
+Enter value for dept: eee
+Enter value for year: 2
+Enter value for marks: 95
+old   1: insert into student1 values(&stud_id,'&name1','&dept',&year,&marks)
+new   1: insert into student1 values(666,'karuna','eee',2,95)
+
+1 row created.
+
+SQL> select*from student1;
+
+   STUD_ID NAME1                DEPT1           YEAR1      MARKS
+---------- -------------------- ---------- ---------- ----------
+       444 yam                  cse                 3         88
+       222 yash                 eee                 1         69
+       111 gowri                it                  3         99
+       666 karuna               eee                 2         95
+
+SQL> select stud_id,dept1
+  2  from student1
+  3  where dept='cse';
+where dept='cse'
+      *
+ERROR at line 3:
+ORA-00904: "DEPT": invalid identifier
+
+
+SQL> select stud_id,dept1
+  2  from student1
+  3  where dept1='cse';
+
+   STUD_ID DEPT1
+---------- ----------
+       444 cse
+
+SQL> select distinct dept1 from student1;
+
+DEPT1
+----------
+cse
+eee
+it
+
+SQL> update student1
+  2  set dept1='mech';
+
+4 rows updated.
+
+SQL> select*from student1;
+
+   STUD_ID NAME1                DEPT1           YEAR1      MARKS
+---------- -------------------- ---------- ---------- ----------
+       444 yam                  mech                3         88
+       222 yash                 mech                1         69
+       111 gowri                mech                3         99
+       666 karuna               mech                2         95
+
+SQL> update student1
+  2  set dept1='cse'
+  3  where marks>95;
+
+1 row updated.
+
+SQL> select*from student1;
+
+   STUD_ID NAME1                DEPT1           YEAR1      MARKS
+---------- -------------------- ---------- ---------- ----------
+       444 yam                  mech                3         88
+       222 yash                 mech                1         69
+       111 gowri                cse                 3         99
+       666 karuna               mech                2         95
+
+SQL> delete from student1 where year=1;
+delete from student1 where year=1
+                           *
+ERROR at line 1:
+ORA-00904: "YEAR": invalid identifier
+
+
+SQL> delete from student1 where year1=1;
+
+1 row deleted.
+
+SQL> select*from student1;
+
+   STUD_ID NAME1                DEPT1           YEAR1      MARKS
+---------- -------------------- ---------- ---------- ----------
+       444 yam                  mech                3         88
+       111 gowri                cse                 3         99
+       666 karuna               mech                2         95
+
+SQL> delete from student1;
+
+3 rows deleted.
+
+SQL> select*from student1;
+
+no rows selected
+
+SQL> desc
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUD_ID                                            NUMBER(38)
+ NAME1                                              VARCHAR2(20)
+ DEPT1                                              VARCHAR2(10)
+ YEAR1                                              NUMBER(38)
+ MARKS                                              NUMBER(38)
+
+SQL> alter student1
+  2  add stud_loc varchar(20);
+alter student1
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> alter table student1
+  2  add email varchar(20);
+
+Table altered.
+
+SQL> select*from student1;
+
+no rows selected
+
+SQL> alter tablw student1
+  2  add m1 int,m2 int,m3 int;
+alter tablw student1
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> alter table student1
+  2  add m1 int,m2 int,m3 int;
+add m1 int,m2 int,m3 int
+          *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table student1
+  2  add m1 int,m2 int,m3 int;
+add m1 int,m2 int,m3 int
+          *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table student1
+  2  add m1 int,
+  3  add m2 int,
+  4  add m3 int;
+add m1 int,
+          *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table student1 add(M1 int,M2 int,M3 int);
+
+Table altered.
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUD_ID                                            NUMBER(38)
+ NAME1                                              VARCHAR2(20)
+ DEPT1                                              VARCHAR2(10)
+ YEAR1                                              NUMBER(38)
+ MARKS                                              NUMBER(38)
+ EMAIL                                              VARCHAR2(20)
+ M1                                                 NUMBER(38)
+ M2                                                 NUMBER(38)
+ M3                                                 NUMBER(38)
+
+SQL> alter table student1
+  2  modify stud_id varchar(10);
+
+Table altered.
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUD_ID                                            VARCHAR2(10)
+ NAME1                                              VARCHAR2(20)
+ DEPT1                                              VARCHAR2(10)
+ YEAR1                                              NUMBER(38)
+ MARKS                                              NUMBER(38)
+ EMAIL                                              VARCHAR2(20)
+ M1                                                 NUMBER(38)
+ M2                                                 NUMBER(38)
+ M3                                                 NUMBER(38)
+
+SQL> alter table student1
+  2  drop column dept1;
+
+Table altered.
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUD_ID                                            VARCHAR2(10)
+ NAME1                                              VARCHAR2(20)
+ YEAR1                                              NUMBER(38)
+ MARKS                                              NUMBER(38)
+ EMAIL                                              VARCHAR2(20)
+ M1                                                 NUMBER(38)
+ M2                                                 NUMBER(38)
+ M3                                                 NUMBER(38)
+
+SQL> alter table student1 drop columns(M1,M2,M3);
+alter table student1 drop columns(M1,M2,M3)
+                                 *
+ERROR at line 1:
+ORA-02000: missing CONTINUE keyword
+
+
+SQL> alter table student1 drop column(M1,M2,M3);
+alter table student1 drop column(M1,M2,M3)
+                                *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> drop table M1,M2,M3;
+drop table M1,M2,M3
+             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> drop table M1;
+drop table M1
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> alter table student1 drop(M1,M2,M3);
+
+Table altered.
+
+SQL> desc student1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUD_ID                                            VARCHAR2(10)
+ NAME1                                              VARCHAR2(20)
+ YEAR1                                              NUMBER(38)
+ MARKS                                              NUMBER(38)
+ EMAIL                                              VARCHAR2(20)
+
+SQL> drop table student1
+  2  ;
+
+Table dropped.
+
+SQL>
