@@ -1,0 +1,68 @@
+SQL> CREATE TABLE Employee(
+  2  Emp_ID INT PRIMARY KEY,
+  3  Emp_Name VARCHAR
+  4  
+SQL> 
+SQL> CREATE TABLE Employee(
+  2  Emp_ID INT PRIMARY KEY,
+  3  Emp_Name VARCHAR(50),
+  4  Dept VARCHAR(30),
+  5  Salary DECIMAL(10,2),
+  6  Join_Date DATE);
+CREATE TABLE Employee(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+STUDENT                        TABLE                                            
+EMPLOYEE                       TABLE                                            
+
+SQL> INSERT INTO Employee(Emp_ID,Emp_Name,Dept,Salary,Join_Date)
+  2  VALUES(101,'Rahul','Fin
+  3  S
+  4  
+SQL> INSERT INTO Employee(Emp_ID,Emp_Name,Dept,Salary,Join_Date)
+  2  VALUES(101,'Rahul','Finance',45000,'2023-03-15'),
+  3  VALUES(102,'Anita','Finance',50000,'2021-08-20'),
+  4  VALUES(103,'Karan','Finance',42000,'2023-01-20');
+VALUES(101,'Rahul','Finance',45000,'2023-03-15'),
+                                                *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> INSERT INTO Employee(Emp_ID, Emp_Name, Dept, Salary, Join_Date)
+  2  VALUES (101, 'Rahul', 'Finance', 45000, DATE '2023-03-15');
+INSERT INTO Employee(Emp_ID, Emp_Name, Dept, Salary, Join_Date)
+                                                     *
+ERROR at line 1:
+ORA-00904: "JOIN_DATE": invalid identifier 
+
+
+SQL> DESC Employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER(38)
+ EMPPLOYEENAME                                      VARCHAR2(30)
+ DEPARTMENT                                         VARCHAR2(20)
+ SALARY                                             NUMBER(38)
+
+SQL> ALTER TABLE EmployeeADD Join_Date DATE;
+ALTER TABLE EmployeeADD Join_Date DATE
+                        *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ALTER TABLE Employee
+  2  ADD Join_Date DATE;
+
+Table altered.
+
+SQL> INSERT INTO Employee (EMPLOYEEID, EMPPLOYEENAME, DEPARTMENT, SALARY, JOIN_DATE)
+  2  
